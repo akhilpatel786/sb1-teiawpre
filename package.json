@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cypress:open": "cypress open",
-    "cypress:run": "npx cypress run --reporter junit --reporter-options 'mochaFile=results/my-test-output-[hash].xml'",
+    "cypress:open": "cypress open --env allure=true",
+    "cypress:run": "npx cypress run --reporter junit --reporter-options 'mochaFile=results/my-test-output-[hash].xml' --env allure=true",
     "test:api": "cypress run --spec 'cypress/e2e/api/**/*.cy.ts'"
   },
   "dependencies": {
@@ -41,6 +41,7 @@
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
+    "@shelex/cypress-allure-plugin": "^2.40.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

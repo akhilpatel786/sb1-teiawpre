@@ -6,8 +6,9 @@ import { promisify } from 'util';
 import { getTestReports } from '@/lib/test-utils';
 
 const execAsync = promisify(exec);
+export const dynamic = "force-static";
 
-export async function GET() {
+export async function GET() {  
   try {
     const reports = await getTestReports();
     return NextResponse.json({ reports });
@@ -22,10 +23,11 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { testFile } = await request.json();
+    const { testFile } = await request.json();     
     
     // Validate test file exists
     const testPath = path.join(process.cwd(), 'cypress/e2e/api', testFile);
+    
     try {
       await fs.access(testPath);
     } catch {
@@ -55,8 +57,7 @@ export async function POST(request: Request) {
         message: 'Test execution completed',
         details: { stdout, stderr }
       });
-    } catch (execError: any) {
-      console.error('Test execution failed:', execError);
+    } catch (execError: any) {    
       // Even if the test fails, we still return 200 as the execution itself completed
       return NextResponse.json({ 
         message: 'Test execution completed with failures',
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
       });
     }
   } catch (error) {
-    console.error('Error handling test execution:', error);
+    // console.error('Error handling test execution:', error);
     return NextResponse.json(
       { error: 'Failed to execute test' },
       { status: 500 }
